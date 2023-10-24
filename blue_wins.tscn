@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://dft5aohhb6qmk"]
+
+[ext_resource type="Texture2D" uid="uid://bdq4nu7c4fl3i" path="res://artwork/start_screen.png" id="1_amxhh"]
+
+[node name="blue_wins" type="Node2D"]
+
+[node name="background" type="TextureRect" parent="."]
+offset_right = 792.0
+offset_bottom = 660.0
+texture = ExtResource("1_amxhh")
+
+[node name="winner" type="Label" parent="."]
+offset_left = 191.0
+offset_top = 180.0
+offset_right = 457.0
+offset_bottom = 252.0
+theme_override_colors/font_color = Color(0.262745, 0.392157, 1, 1)
+theme_override_font_sizes/font_size = 50
+text = "BLUE WINS"

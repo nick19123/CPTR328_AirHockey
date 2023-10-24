@@ -1,0 +1,157 @@
+[gd_scene load_steps=16 format=3 uid="uid://bxwyjgrxfnnws"]
+
+[ext_resource type="Texture2D" uid="uid://bnkum5p0sbv40" path="res://artwork/table.png" id="1_0658o"]
+[ext_resource type="Script" path="res://SceneManager.gd" id="1_aebjf"]
+[ext_resource type="PackedScene" uid="uid://ce0ushk7sorx4" path="res://player.tscn" id="2_qjp6p"]
+[ext_resource type="Texture2D" uid="uid://di02q112phu5h" path="res://artwork/circle_R.png" id="5_cf47q"]
+[ext_resource type="Texture2D" uid="uid://djs317p17pkyk" path="res://artwork/circle_B.png" id="6_f8us7"]
+[ext_resource type="Texture2D" uid="uid://cjpiey6ode27r" path="res://artwork/puck.png" id="6_fiw47"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jmj2a"]
+friction = 0.0
+rough = true
+bounce = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0j767"]
+size = Vector2(1280, 27)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j7om0"]
+size = Vector2(1280, 27)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qkn0m"]
+size = Vector2(47, 196)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ouake"]
+size = Vector2(32.5, 274)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wh5x1"]
+size = Vector2(14, 666)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_a13me"]
+friction = 0.5
+rough = true
+bounce = 0.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5o44e"]
+radius = 38.0526
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_n6gow"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/0/watch = false
+
+[node name="table" type="Node2D"]
+script = ExtResource("1_aebjf")
+PlayerScene = ExtResource("2_qjp6p")
+
+[node name="table_png" type="Sprite2D" parent="."]
+position = Vector2(640, 360)
+texture = ExtResource("1_0658o")
+metadata/_edit_lock_ = true
+
+[node name="wall" type="StaticBody2D" parent="."]
+collision_layer = 8
+collision_mask = 3
+physics_material_override = SubResource("PhysicsMaterial_jmj2a")
+
+[node name="top_wall" type="CollisionShape2D" parent="wall"]
+position = Vector2(640, 13.5)
+shape = SubResource("RectangleShape2D_0j767")
+metadata/_edit_lock_ = true
+
+[node name="bot_wall" type="CollisionShape2D" parent="wall"]
+position = Vector2(640, 706.5)
+shape = SubResource("RectangleShape2D_j7om0")
+metadata/_edit_lock_ = true
+
+[node name="left_wall_1" type="CollisionShape2D" parent="wall"]
+position = Vector2(23.5, 125)
+shape = SubResource("RectangleShape2D_qkn0m")
+metadata/_edit_lock_ = true
+
+[node name="left_wall_2" type="CollisionShape2D" parent="wall"]
+position = Vector2(23.5, 595)
+shape = SubResource("RectangleShape2D_qkn0m")
+metadata/_edit_lock_ = true
+
+[node name="right_wall_1" type="CollisionShape2D" parent="wall"]
+position = Vector2(1256.5, 125)
+shape = SubResource("RectangleShape2D_qkn0m")
+metadata/_edit_lock_ = true
+
+[node name="right_wall_2" type="CollisionShape2D" parent="wall"]
+position = Vector2(1256.5, 595)
+shape = SubResource("RectangleShape2D_qkn0m")
+metadata/_edit_lock_ = true
+
+[node name="Goals" type="StaticBody2D" parent="."]
+collision_layer = 4
+
+[node name="left_goal" type="CollisionShape2D" parent="Goals"]
+position = Vector2(31, 360)
+shape = SubResource("RectangleShape2D_ouake")
+debug_color = Color(1, 1, 0.701961, 0.419608)
+metadata/_edit_lock_ = true
+
+[node name="right_goal" type="CollisionShape2D" parent="Goals"]
+position = Vector2(1249, 360)
+shape = SubResource("RectangleShape2D_ouake")
+debug_color = Color(1, 1, 0.701961, 0.419608)
+metadata/_edit_lock_ = true
+
+[node name="Midline" type="StaticBody2D" parent="."]
+collision_layer = 16
+
+[node name="mid_line" type="CollisionShape2D" parent="Midline"]
+position = Vector2(640, 360)
+shape = SubResource("RectangleShape2D_wh5x1")
+metadata/_edit_lock_ = true
+
+[node name="puck" type="RigidBody2D" parent="."]
+position = Vector2(640, 360)
+collision_layer = 2
+collision_mask = 9
+physics_material_override = SubResource("PhysicsMaterial_a13me")
+gravity_scale = 2.66454e-15
+max_contacts_reported = 1
+contact_monitor = true
+
+[node name="puck_png" type="Sprite2D" parent="puck"]
+texture = ExtResource("6_fiw47")
+
+[node name="puck_collision" type="CollisionShape2D" parent="puck"]
+shape = SubResource("CircleShape2D_5o44e")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="puck"]
+replication_config = SubResource("SceneReplicationConfig_n6gow")
+
+[node name="SpawnLocations" type="Node2D" parent="."]
+
+[node name="0" type="Node2D" parent="SpawnLocations" groups=["PlayerSpawnGroup"]]
+position = Vector2(340, 360)
+metadata/_edit_lock_ = true
+
+[node name="1" type="Node2D" parent="SpawnLocations" groups=["PlayerSpawnGroup"]]
+position = Vector2(940, 360)
+metadata/_edit_lock_ = true
+
+[node name="PuckSpawnLocations" type="Node2D" parent="."]
+
+[node name="0" type="Node2D" parent="PuckSpawnLocations" groups=["PuckSpawn"]]
+position = Vector2(640, 360)
+metadata/_edit_lock_ = true
+
+[node name="red_Score" type="Sprite2D" parent="."]
+position = Vector2(100, 637)
+scale = Vector2(0.244236, 0.299488)
+texture = ExtResource("5_cf47q")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="red_Score"]
+
+[node name="blue_Score" type="Sprite2D" parent="."]
+position = Vector2(1000, 88)
+scale = Vector2(0.229107, 0.271331)
+texture = ExtResource("6_f8us7")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="blue_Score"]

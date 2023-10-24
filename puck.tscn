@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://dyjy0pmphp6vk"]
+
+[ext_resource type="Texture2D" uid="uid://cjpiey6ode27r" path="res://artwork/puck.png" id="1_3avc4"]
+[ext_resource type="Script" path="res://puck.gd" id="1_67tea"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_a13me"]
+friction = 0.5
+rough = true
+bounce = 0.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5o44e"]
+radius = 38.0526
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_n6gow"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/0/watch = false
+
+[node name="puck" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 9
+physics_material_override = SubResource("PhysicsMaterial_a13me")
+gravity_scale = 2.66454e-15
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("1_67tea")
+
+[node name="puck_png" type="Sprite2D" parent="."]
+texture = ExtResource("1_3avc4")
+
+[node name="puck_collision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_5o44e")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_n6gow")
