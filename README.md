@@ -1,2 +1,2 @@
 # CPTR328_AirHockey
-Air Hockey for CPTR328 Class Project
+2p Multiplayer Air Hockey Game for CPTR328 Class Project
